@@ -361,6 +361,8 @@ class RNA(Sequence):
         for i in range(start_place, len(self.seq_itself), 3):
             cod = self.seq_itself[i:i+3]
             for key, item in CODON_TABLE.items():
+                if key in ["UAA", "UAG", "UGA"]:
+                    break
                 if cod == key:
                     self.protein_seq += item
 
@@ -398,7 +400,7 @@ class Protein(Sequence):
             self.seq_itself.count('H'), self.seq_itself.count('D'), self.seq_itself.count('E'))
         self.d_positive = {'K': K, 'R': R, 'H': H}
         self.d_negative = {'D': D, 'E': E}
-        return d
+        return self.d_positive, self.d_negative
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     
     def to_protein(self) -> str:
